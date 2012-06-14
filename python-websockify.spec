@@ -1,6 +1,6 @@
 Name:           python-websockify
 Version:        0.1.0
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        WSGI based adapter for the Websockets protocol
 
 License:        LGPLv3
@@ -10,7 +10,6 @@ Patch0:		websockify-0.1.1-manpage.patch
 BuildArch:      noarch
 BuildRequires:  python2-devel
 BuildRequires:  python-setuptools
-Requires:       numpy
 %description
 Python WSGI based adapter for the Websockets protocol
 
@@ -40,9 +39,11 @@ install -m 444 docs/websockify.1 %{buildroot}%{_mandir}/man1/
 %{_bindir}/websockify
 
 
-
 %changelog
-* Wed Jun 6 2012  - Adam Young <ayoung@redhat.com> - 0.1.0-4
+* Thu Jun 14 2012 Pádraig Brady <P@draigBrady.com> - 0.1.0-5
+- Removed hard dependency on numpy
+
+* Wed Jun 6 2012 Adam Young <ayoung@redhat.com> - 0.1.0-4
 - Added Description
 - Added Manpage
 
