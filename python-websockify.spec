@@ -1,12 +1,13 @@
 Name:           python-websockify
-Version:        0.1.0
-Release:        6%{?dist}
+Version:        0.2.0
+Release:        1%{?dist}
 Summary:        WSGI based adapter for the Websockets protocol
 
 License:        LGPLv3
 URL:            https://github.com/kanaka/websockify
 Source0:        https://github.com/downloads/kanaka/websockify/websockify-%{version}.tar.gz
-Patch0:		websockify-0.1.1-manpage.patch
+Patch0:		websockify-0.2-fix-setup-py-version.patch
+Patch1:		websockify-0.2-handle-errors-when-popping-kwargs.patch
 BuildArch:      noarch
 BuildRequires:  python2-devel
 BuildRequires:  python-setuptools
@@ -16,6 +17,7 @@ Python WSGI based adapter for the Websockets protocol
 %prep
 %setup -q -n websockify-%{version}
 %patch0 -p1
+%patch1 -p1
 
 %build
 %{__python} setup.py build
@@ -40,6 +42,9 @@ install -m 444 docs/websockify.1 %{buildroot}%{_mandir}/man1/
 
 
 %changelog
+* Mon Oct 22 2012 Nikola Đipanov <ndipanov@redhat.com> - 0.2.0-1
+- Moving to the upstream version 0.2.0
+
 * Sat Jul 21 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.1.0-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
 

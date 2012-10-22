@@ -1,0 +1,26 @@
+From daa2d950df99ceaa5a0693570e8e6b6cb5da8ed0 Mon Sep 17 00:00:00 2001
+From: Nikola Dipanov <ndipanov@redhat.com>
+Date: Mon, 22 Oct 2012 15:09:53 +0200
+Subject: [PATCH] Fix the setup.py version
+
+Fixes the version in the setup script in order to be able to use
+%{version} macro properly in the rpm spec file
+---
+ setup.py |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/setup.py b/setup.py
+index 947f0a5..a435465 100644
+--- a/setup.py
++++ b/setup.py
+@@ -1,6 +1,6 @@
+ from setuptools import setup, find_packages
+ 
+-version = '0.1.0'
++version = '0.2.0'
+ name = 'websockify'
+ long_description = open("README.md").read() + "\n" + \
+     open("CHANGES.txt").read() + "\n"
+-- 
+1.7.9.5
+
