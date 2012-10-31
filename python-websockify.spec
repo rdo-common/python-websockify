@@ -1,6 +1,6 @@
 Name:           python-websockify
 Version:        0.2.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        WSGI based adapter for the Websockets protocol
 
 License:        LGPLv3
@@ -18,6 +18,9 @@ Python WSGI based adapter for the Websockets protocol
 %setup -q -n websockify-%{version}
 %patch0 -p1
 %patch1 -p1
+
+# TODO: Have the following handle multi line entries
+sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
 
 %build
 %{__python} setup.py build
@@ -42,14 +45,14 @@ install -m 444 docs/websockify.1 %{buildroot}%{_mandir}/man1/
 
 
 %changelog
+* Wed Oct 31 2012 Pádraig Brady <P@draigBrady.com> - 0.2.0-2
+- Remove hard dependency on numpy
+
 * Mon Oct 22 2012 Nikola Đipanov <ndipanov@redhat.com> - 0.2.0-1
 - Moving to the upstream version 0.2.0
 
 * Sat Jul 21 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.1.0-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
-
-* Thu Jun 14 2012 Pádraig Brady <P@draigBrady.com> - 0.1.0-5
-- Removed hard dependency on numpy
 
 * Wed Jun 6 2012 Adam Young <ayoung@redhat.com> - 0.1.0-4
 - Added Description
