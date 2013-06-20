@@ -1,13 +1,11 @@
 Name:           python-websockify
-Version:        0.2.0
-Release:        4%{?dist}
+Version:        0.4.1
+Release:        1%{?dist}
 Summary:        WSGI based adapter for the Websockets protocol
 
 License:        LGPLv3
 URL:            https://github.com/kanaka/websockify
-Source0:        https://github.com/downloads/kanaka/websockify/websockify-%{version}.tar.gz
-Patch0:		websockify-0.2-fix-setup-py-version.patch
-Patch1:		websockify-0.2-handle-errors-when-popping-kwargs.patch
+Source0:        https://github.com/kanaka/websockify/archive/v%{version}.tar.gz#/websockify-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  python2-devel
 BuildRequires:  python-setuptools
@@ -19,8 +17,6 @@ Python WSGI based adapter for the Websockets protocol
 
 %prep
 %setup -q -n websockify-%{version}
-%patch0 -p1
-%patch1 -p1
 
 # TODO: Have the following handle multi line entries
 sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
@@ -32,8 +28,7 @@ sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
 %install
 %{__python} setup.py install -O1 --skip-build --root %{buildroot}
 
-install websockify.py %{buildroot}/%{python_sitelib}
-install websocket.py %{buildroot}/%{python_sitelib}
+rm -Rf %{buildroot}/usr/share/websockify
 mkdir -p %{buildroot}%{_mandir}/man1/
 install -m 444 docs/websockify.1 %{buildroot}%{_mandir}/man1/
 
@@ -41,13 +36,15 @@ install -m 444 docs/websockify.1 %{buildroot}%{_mandir}/man1/
 %files
 %doc LICENSE.txt docs
 %{_mandir}/man1/websockify.1*
-%{python_sitelib}/websockify.py*
-%{python_sitelib}/websocket.py*
+%{python_sitelib}/websockify/*
 %{python_sitelib}/websockify-%{version}-py?.?.egg-info
 %{_bindir}/websockify
 
 
 %changelog
+* Thu Jun 20 2013 Pádraig Brady <P@draigBrady.com> - 0.4.1-1
+- Update to release 0.4.1
+
 * Tue Mar 12 2013 Pádraig Brady <P@draigBrady.com> - 0.2.0-4
 - Add runtime dependency on setuptools
 
