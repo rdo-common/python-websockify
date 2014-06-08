@@ -1,6 +1,6 @@
 Name:           python-websockify
 Version:        0.5.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        WSGI based adapter for the Websockets protocol
 
 License:        LGPLv3
@@ -42,6 +42,9 @@ install -m 444 docs/websockify.1 %{buildroot}%{_mandir}/man1/
 
 
 %changelog
+* Sun Jun 08 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.5.1-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
+
 * Thu Sep 10 2013 Nikola Đipanov <ndipanov@redhat.com> - 0.5.1-1
 - Update to release 0.5.1
 
