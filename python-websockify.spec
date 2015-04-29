@@ -1,6 +1,6 @@
 Name:           python-websockify
 Version:        0.6.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        WSGI based adapter for the Websockets protocol
 
 License:        LGPLv3
@@ -12,11 +12,15 @@ BuildRequires:  python-setuptools
 
 Requires:       python-setuptools
 
+Patch0:         big-endian.patch
+
 %description
 Python WSGI based adapter for the Websockets protocol
 
 %prep
 %setup -q -n websockify-%{version}
+
+%patch0 -p1
 
 # TODO: Have the following handle multi line entries
 sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
@@ -42,6 +46,9 @@ install -m 444 docs/websockify.1 %{buildroot}%{_mandir}/man1/
 
 
 %changelog
+* Wed Apr 29 2015 Pádraig Brady <pbrady@redhat.com> - 0.6.0-2
+- Support big endian systems - rhbz#1216219
+
 * Mon Mar 23 2015 Nikola Đipanov <ndipanov@redhat.com> - 0.6.0-1
 - Update to release 0.6.0
 
