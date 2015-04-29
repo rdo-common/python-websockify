@@ -1,0 +1,53 @@
+From af10f458a1590691e4c2f03a499d6c22fdf81cfe Mon Sep 17 00:00:00 2001
+From: Rafael Folco <rafaelfolco@gmail.com>
+Date: Wed, 25 Mar 2015 01:20:25 -0300
+Subject: [PATCH] BUGFIX:  Websocket frame corruption on big-endian #150
+
+This patch fixes noVNC endianess problem on handshake.
+It affects noVNC sessions on Big Endian platforms.
+
+Fixes #150
+---
+ websockify/websocket.py | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
+
+diff --git a/websockify/websocket.py b/websockify/websocket.py
+index 1b3dca9..de56af3 100644
+--- a/websockify/websocket.py
++++ b/websockify/websocket.py
+@@ -118,20 +118,24 @@ class WebSocketRequestHandler(SimpleHTTPRequestHandler):
+         if numpy:
+             b = c = s2b('')
+             if plen >= 4:
+-                mask = numpy.frombuffer(buf, dtype=numpy.dtype('<u4'),
+-                        offset=hlen, count=1)
+-                data = numpy.frombuffer(buf, dtype=numpy.dtype('<u4'),
+-                        offset=pstart, count=int(plen / 4))
++                dtype=numpy.dtype('<u4')
++                if sys.byteorder == 'big':
++                    dtype = dtype.newbyteorder('>')
++                mask = numpy.frombuffer(buf, dtype, offset=hlen, count=1)
++                data = numpy.frombuffer(buf, dtype, offset=pstart,
++                        count=int(plen / 4))
+                 #b = numpy.bitwise_xor(data, mask).data
+                 b = numpy.bitwise_xor(data, mask).tostring()
+ 
+             if plen % 4:
+                 #self.msg("Partial unmask")
+-                mask = numpy.frombuffer(buf, dtype=numpy.dtype('B'),
+-                        offset=hlen, count=(plen % 4))
+-                data = numpy.frombuffer(buf, dtype=numpy.dtype('B'),
+-                        offset=pend - (plen % 4),
++                dtype=numpy.dtype('B')
++                if sys.byteorder == 'big':
++                    dtype = dtype.newbyteorder('>')
++                mask = numpy.frombuffer(buf, dtype, offset=hlen,
+                         count=(plen % 4))
++                data = numpy.frombuffer(buf, dtype,
++                        offset=pend - (plen % 4), count=(plen % 4))
+                 c = numpy.bitwise_xor(data, mask).tostring()
+             return b + c
+         else:
+-- 
+2.3.4
+
