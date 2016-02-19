@@ -1,6 +1,6 @@
 Name:           python-websockify
-Version:        0.6.0
-Release:        4%{?dist}
+Version:        0.8.0
+Release:        1%{?dist}
 Summary:        WSGI based adapter for the Websockets protocol
 
 License:        LGPLv3
@@ -12,15 +12,11 @@ BuildRequires:  python-setuptools
 
 Requires:       python-setuptools
 
-Patch0:         big-endian.patch
-
 %description
 Python WSGI based adapter for the Websockets protocol
 
 %prep
 %setup -q -n websockify-%{version}
-
-%patch0 -p1
 
 # TODO: Have the following handle multi line entries
 sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
@@ -46,6 +42,9 @@ install -m 444 docs/websockify.1 %{buildroot}%{_mandir}/man1/
 
 
 %changelog
+* Fri Feb 19 2016 Solly Ross <sross@redhat.com> - 0.8.0-1
+- Update to release 0.8.0
+
 * Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 0.6.0-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
