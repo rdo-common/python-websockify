@@ -1,47 +1,87 @@
-Name:           python-websockify
+%global pkgname websockify
+%global summary WSGI based adapter for the Websockets protocol
+Name:           python-%{pkgname}
 Version:        0.8.0
-Release:        2%{?dist}
-Summary:        WSGI based adapter for the Websockets protocol
+Release:        3%{?dist}
+Summary:        %{summary}
 
 License:        LGPLv3
 URL:            https://github.com/kanaka/websockify
 Source0:        https://github.com/kanaka/websockify/archive/v%{version}.tar.gz#/websockify-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires:  python2-devel
-BuildRequires:  python-setuptools
-
-Requires:       python-setuptools
 
 %description
 Python WSGI based adapter for the Websockets protocol
 
+%package -n python2-%{pkgname}
+Summary:        %{summary} - Python 2 version
+BuildRequires:  python2-devel
+BuildRequires:  python2-setuptools
+
+Requires:       python2-setuptools
+
+%{?python_provide:%python_provide python2-%{pkgname}}
+
+%description -n python2-%{pkgname}
+Python WSGI based adapter for the Websockets protocol - Python 2 version
+
+%package -n python3-%{pkgname}
+Summary:        %{summary} - Python 3 version
+BuildRequires:  python3-devel
+BuildRequires:  python3-setuptools
+
+Requires:       python3-setuptools
+
+%{?python_provide:%python_provide python3-%{pkgname}}
+
+%description -n python3-%{pkgname}
+Python WSGI based adapter for the Websockets protocol - Python 3 version
+
+%package doc
+Summary:        %{summary} - documentation
+
+%description doc
+Python WSGI based adapter for the Websockets protocol - documentation
+
 %prep
-%setup -q -n websockify-%{version}
+%autosetup -n %{pkgname}-%{version}
 
 # TODO: Have the following handle multi line entries
 sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
 
 %build
-%{__python} setup.py build
-
+%py2_build
+%py3_build
 
 %install
-%{__python} setup.py install -O1 --skip-build --root %{buildroot}
+%py2_install
+rm %{buildroot}%{_bindir}/*
+%py3_install
 
 rm -Rf %{buildroot}/usr/share/websockify
 mkdir -p %{buildroot}%{_mandir}/man1/
 install -m 444 docs/websockify.1 %{buildroot}%{_mandir}/man1/
 
+%files -n python2-%{pkgname}
+%license LICENSE.txt
+%{python2_sitelib}/websockify/*
+%{python2_sitelib}/websockify-%{version}-py?.?.egg-info
 
-%files
-%doc LICENSE.txt docs
+%files -n python3-%{pkgname}
+%license LICENSE.txt
 %{_mandir}/man1/websockify.1*
-%{python_sitelib}/websockify/*
-%{python_sitelib}/websockify-%{version}-py?.?.egg-info
+%{python3_sitelib}/websockify/*
+%{python3_sitelib}/websockify-%{version}-py?.?.egg-info
 %{_bindir}/websockify
 
+%files doc
+%license LICENSE.txt
+%doc docs
 
 %changelog
+* Mon Aug 29 2016 Jan Beran <jberan@redhat.com> - 0.8.0-3
+- Python 3 subpackage
+
 * Tue Jul 19 2016 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.8.0-2
 - https://fedoraproject.org/wiki/Changes/Automatic_Provides_for_Python_RPM_Packages
 
@@ -63,7 +103,7 @@ install -m 444 docs/websockify.1 %{buildroot}%{_mandir}/man1/
 * Sun Jun 08 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.5.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
-* Thu Sep 10 2013 Nikola Đipanov <ndipanov@redhat.com> - 0.5.1-1
+* Tue Sep 10 2013 Nikola Đipanov <ndipanov@redhat.com> - 0.5.1-1
 - Update to release 0.5.1
 
 * Sun Aug 04 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.4.1-2
@@ -96,3 +136,4 @@ install -m 444 docs/websockify.1 %{buildroot}%{_mandir}/man1/
 
 * Thu May 10 2012 Adam Young <ayoung@redhat.com> - 0.1.0-1
 - Initial RPM release.
+
