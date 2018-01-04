@@ -2,7 +2,7 @@
 %global summary WSGI based adapter for the Websockets protocol
 Name:           python-%{pkgname}
 Version:        0.8.0
-Release:        6%{?dist}
+Release:        7%{?dist}
 Summary:        %{summary}
 
 License:        LGPLv3
@@ -64,13 +64,13 @@ install -m 444 docs/websockify.1 %{buildroot}%{_mandir}/man1/
 
 %files -n python2-%{pkgname}
 %license LICENSE.txt
-%{python2_sitelib}/websockify/*
+%{python2_sitelib}/websockify/
 %{python2_sitelib}/websockify-%{version}-py?.?.egg-info
 
 %files -n python3-%{pkgname}
 %license LICENSE.txt
 %{_mandir}/man1/websockify.1*
-%{python3_sitelib}/websockify/*
+%{python3_sitelib}/websockify/
 %{python3_sitelib}/websockify-%{version}-py?.?.egg-info
 %{_bindir}/websockify
 
@@ -79,6 +79,9 @@ install -m 444 docs/websockify.1 %{buildroot}%{_mandir}/man1/
 %doc docs
 
 %changelog
+* Thu Jan 04 2018 Lumír Balhar <lbalhar@redhat.com> - 0.8.0-7
+- Fix directory ownership
+
 * Thu Jul 27 2017 Fedora Release Engineering <releng@fedoraproject.org> - 0.8.0-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
 
