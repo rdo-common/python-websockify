@@ -2,7 +2,7 @@
 %global summary WSGI based adapter for the Websockets protocol
 Name:           python-%{pkgname}
 Version:        0.8.0
-Release:        8%{?dist}
+Release:        9%{?dist}
 Summary:        %{summary}
 
 License:        LGPLv3
@@ -79,6 +79,9 @@ install -m 444 docs/websockify.1 %{buildroot}%{_mandir}/man1/
 %doc docs
 
 %changelog
+* Tue Jun 19 2018 Miro Hrončok <mhroncok@redhat.com> - 0.8.0-9
+- Rebuilt for Python 3.7
+
 * Fri Feb 16 2018 2018 Lumír Balhar <lbalhar@redhat.com> - 0.8.0-8
 - Fix directory ownership
 
