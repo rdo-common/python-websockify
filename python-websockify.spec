@@ -2,7 +2,7 @@
 %global summary WSGI based adapter for the Websockets protocol
 Name:           python-%{pkgname}
 Version:        0.8.0
-Release:        11%{?dist}
+Release:        12%{?dist}
 Summary:        %{summary}
 
 License:        LGPLv3
@@ -79,6 +79,9 @@ install -m 444 docs/websockify.1 %{buildroot}%{_mandir}/man1/
 %doc docs
 
 %changelog
+* Fri Jul 26 2019 Fedora Release Engineering <releng@fedoraproject.org> - 0.8.0-12
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
+
 * Sat Feb 02 2019 Fedora Release Engineering <releng@fedoraproject.org> - 0.8.0-11
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
 
