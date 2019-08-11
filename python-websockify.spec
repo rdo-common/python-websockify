@@ -2,7 +2,7 @@
 %global summary WSGI based adapter for the Websockets protocol
 Name:           python-%{pkgname}
 Version:        0.8.0
-Release:        12%{?dist}
+Release:        13%{?dist}
 Summary:        %{summary}
 
 License:        LGPLv3
@@ -12,18 +12,6 @@ BuildArch:      noarch
 
 %description
 Python WSGI based adapter for the Websockets protocol
-
-%package -n python2-%{pkgname}
-Summary:        %{summary} - Python 2 version
-BuildRequires:  python2-devel
-BuildRequires:  python2-setuptools
-
-Requires:       python2-setuptools
-
-%{?python_provide:%python_provide python2-%{pkgname}}
-
-%description -n python2-%{pkgname}
-Python WSGI based adapter for the Websockets protocol - Python 2 version
 
 %package -n python3-%{pkgname}
 Summary:        %{summary} - Python 3 version
@@ -50,22 +38,14 @@ Python WSGI based adapter for the Websockets protocol - documentation
 sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
 
 %build
-%py2_build
 %py3_build
 
 %install
-%py2_install
-rm %{buildroot}%{_bindir}/*
 %py3_install
 
 rm -Rf %{buildroot}/usr/share/websockify
 mkdir -p %{buildroot}%{_mandir}/man1/
 install -m 444 docs/websockify.1 %{buildroot}%{_mandir}/man1/
-
-%files -n python2-%{pkgname}
-%license LICENSE.txt
-%{python2_sitelib}/websockify/
-%{python2_sitelib}/websockify-%{version}-py?.?.egg-info
 
 %files -n python3-%{pkgname}
 %license LICENSE.txt
@@ -79,6 +59,10 @@ install -m 444 docs/websockify.1 %{buildroot}%{_mandir}/man1/
 %doc docs
 
 %changelog
+* Sun Aug 11 2019 Miro Hrončok <mhroncok@redhat.com> - 0.8.0-13
+- Subpackage python2-websockify has been removed
+  See https://fedoraproject.org/wiki/Changes/Mass_Python_2_Package_Removal
+
 * Fri Jul 26 2019 Fedora Release Engineering <releng@fedoraproject.org> - 0.8.0-12
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
 
