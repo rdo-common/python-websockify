@@ -1,3 +1,7 @@
+%if 0%{?fedora} || 0%{?rhel} > 7
+%global with_python3 1
+%endif
+
 %global pkgname websockify
 %global summary WSGI based adapter for the Websockets protocol
 Name:           python-%{pkgname}
@@ -13,6 +17,19 @@ BuildArch:      noarch
 %description
 Python WSGI based adapter for the Websockets protocol
 
+%package -n python2-%{pkgname}
+Summary:        %{summary} - Python 2 version
+BuildRequires:  python2-devel
+BuildRequires:  python2-setuptools
+
+Requires:       python2-setuptools
+
+%{?python_provide:%python_provide python2-%{pkgname}}
+
+%description -n python2-%{pkgname}
+Python WSGI based adapter for the Websockets protocol - Python 2 version
+
+%if 0%{?with_python3}
 %package -n python3-%{pkgname}
 Summary:        %{summary} - Python 3 version
 BuildRequires:  python3-devel
@@ -24,6 +41,7 @@ Requires:       python3-setuptools
 
 %description -n python3-%{pkgname}
 Python WSGI based adapter for the Websockets protocol - Python 3 version
+%endif
 
 %package doc
 Summary:        %{summary} - documentation
@@ -38,21 +56,39 @@ Python WSGI based adapter for the Websockets protocol - documentation
 sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
 
 %build
+%py2_build
+%if 0%{?with_python3}
 %py3_build
+%endif
 
 %install
+%py2_install
+%if 0%{?with_python3}
+rm %{buildroot}%{_bindir}/*
 %py3_install
+%endif
 
 rm -Rf %{buildroot}/usr/share/websockify
 mkdir -p %{buildroot}%{_mandir}/man1/
 install -m 444 docs/websockify.1 %{buildroot}%{_mandir}/man1/
 
+%files -n python2-%{pkgname}
+%license LICENSE.txt
+%{python2_sitelib}/websockify/
+%{python2_sitelib}/websockify-%{version}-py?.?.egg-info
+%if ! 0%{?with_python3}
+%{_bindir}/websockify
+%{_mandir}/man1/websockify.1*
+%endif
+
+%if 0%{?with_python3}
 %files -n python3-%{pkgname}
 %license LICENSE.txt
 %{_mandir}/man1/websockify.1*
 %{python3_sitelib}/websockify/
 %{python3_sitelib}/websockify-%{version}-py?.?.egg-info
 %{_bindir}/websockify
+%endif
 
 %files doc
 %license LICENSE.txt
