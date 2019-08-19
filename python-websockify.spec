@@ -2,7 +2,7 @@
 %global summary WSGI based adapter for the Websockets protocol
 Name:           python-%{pkgname}
 Version:        0.8.0
-Release:        13%{?dist}
+Release:        14%{?dist}
 Summary:        %{summary}
 
 License:        LGPLv3
@@ -59,6 +59,9 @@ install -m 444 docs/websockify.1 %{buildroot}%{_mandir}/man1/
 %doc docs
 
 %changelog
+* Mon Aug 19 2019 Miro Hrončok <mhroncok@redhat.com> - 0.8.0-14
+- Rebuilt for Python 3.8
+
 * Sun Aug 11 2019 Miro Hrončok <mhroncok@redhat.com> - 0.8.0-13
 - Subpackage python2-websockify has been removed
   See https://fedoraproject.org/wiki/Changes/Mass_Python_2_Package_Removal
