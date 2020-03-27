@@ -1,3 +1,6 @@
+%{?python_enable_dependency_generator}
+%global __requires_exclude ^.*enum34.*
+
 %global pkgname websockify
 %global summary WSGI based adapter for the Websockets protocol
 Name:           python-%{pkgname}
