@@ -1,8 +1,8 @@
 %global pkgname websockify
 %global summary WSGI based adapter for the Websockets protocol
 Name:           python-%{pkgname}
-Version:        0.8.0
-Release:        16%{?dist}
+Version:        0.9.0
+Release:        1%{?dist}
 Summary:        %{summary}
 
 License:        LGPLv3
@@ -48,17 +48,20 @@ mkdir -p %{buildroot}%{_mandir}/man1/
 install -m 444 docs/websockify.1 %{buildroot}%{_mandir}/man1/
 
 %files -n python3-%{pkgname}
-%license LICENSE.txt
+%license COPYING
 %{_mandir}/man1/websockify.1*
 %{python3_sitelib}/websockify/
 %{python3_sitelib}/websockify-%{version}-py?.?.egg-info
 %{_bindir}/websockify
 
 %files doc
-%license LICENSE.txt
+%license COPYING
 %doc docs
 
 %changelog
+* Thu Mar 26 2020 Yatin Karel <ykarel@redhat.com> - 0.9.0-1
+- Update to 0.9.0 (Resolves #1816608)
+
 * Thu Jan 30 2020 Fedora Release Engineering <releng@fedoraproject.org> - 0.8.0-16
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
 
